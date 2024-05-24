@@ -1,21 +1,12 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int intialAbhiPower;
-int totalRechargeTimes;
-vector<int> enemyPower;
-
-int totalToKillEnemy(int enemy, int currentPower){
+int totalToKillEnemy(int enemy, int currentPower, int intialAbhiPower){
     return ceil(float(enemy - currentPower)/intialAbhiPower);
 }
 
-int main() {
-
-    enemyPower = {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1000, 1};
+void abhiChakravu(int intialAbhiPower, int totalRechargeTimes, vector<int> enemyPower) {
     int n = enemyPower.size();
-
-    intialAbhiPower = 5;
-    totalRechargeTimes = 5;
 
     int currentPower = intialAbhiPower;
     
@@ -37,7 +28,7 @@ int main() {
         }
 
         // no of times recharge required to kill enemies
-        int totalTimes = totalToKillEnemy(enemy, currentPower);
+        int totalTimes = totalToKillEnemy(enemy, currentPower, intialAbhiPower);
 
         // total times is withing the limit or not?
         if(totalTimes > totalRechargeTimes){
@@ -52,16 +43,30 @@ int main() {
         }
 
         // total times to kill current enemy only
-        totalTimes = totalToKillEnemy(enemyPower[i], currentPower);
+        totalTimes = totalToKillEnemy(enemyPower[i], currentPower, intialAbhiPower);
 
         // final power after killing current enemy
         currentPower += totalTimes * intialAbhiPower - enemyPower[i];
 
         totalRechargeTimes -= totalTimes;
-    }
-
-    cout <<( battle ? "escaped" : "not escaped") << endl;
+    }    
     
+    cout <<( battle ? "escaped" : "not escaped") << endl;
+}
+
+int main() {
+
+    vector<int> enemyPower = {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1000, 1};
+    int intialAbhiPower = 5;
+    int totalRechargeTimes = 5;
+
+    abhiChakravu(intialAbhiPower, totalRechargeTimes, enemyPower);
+
+    enemyPower = {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1};
+    intialAbhiPower = 5;
+    totalRechargeTimes = 5;
+
+    abhiChakravu(intialAbhiPower, totalRechargeTimes, enemyPower);
 
     return 0;
 }
